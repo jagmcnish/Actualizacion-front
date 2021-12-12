@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from 'context/authContext';
 import PrivateComponent from './PrivateComponent';
+import { Menu, Transition } from "@headlessui/react";
+import { useUser } from "context/userContext";
 
 const SidebarLinks = () => {
   return (
@@ -23,6 +25,66 @@ const SidebarLinks = () => {
   );
 };
 
+const Dropdownuser = () => {
+  const { userData } = useUser();
+  const { setToken } = useAuth();
+  const deleteToken = () => {
+    setToken(null);
+  };
+  return (
+    <>
+    <div className='py-3 w-full flex flex-col items-center justify-center'>
+      <span className='text-center text-black font-semibold mb-3'>
+        ¡Bienvenido! <br /> {userData.nombre + " " + userData.apellido}
+      </span>
+      </div>
+      <div className="w-auto flex justify-center top-16">
+        <Menu as="div" className="relative inline-block text-right">
+          <div>
+            <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-10 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+              <i className="fas fa-user-cog"></i>
+              <i
+                className="fas fa-caret-down w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+                aria-hidden="true"
+              ></i>
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="w-56 mt-2 origin-top-right bg-black bg-opacity-10 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <NavLink
+                      className={`${
+                        active ? "bg-green-400 text-black" : "text-black"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      to="perfil"
+                    >
+                      <div className="flex items-center">
+                        <i className='fas fa-address-card' />
+                        <span className="text-sm  ml-2">Perfil</span>
+                      </div>
+                    </NavLink>
+                  )}
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+    </>
+  );
+};
+
+
 const Logout = () => {
   const { setToken } = useAuth();
   const deleteToken = () => {
@@ -34,7 +96,7 @@ const Logout = () => {
       <NavLink to='/auth/login' className='sidebar-route text-red-700'>
         <div className='flex items-center'>
           <i className='fas fa-door-open' />
-          <span className='text-sm  ml-2'>Salida</span>
+          <span className='text-sm  ml-2'>Salir Sistema</span>
         </div>
       </NavLink>
     </li>
@@ -59,6 +121,8 @@ const Sidebar = () => {
       <div className='sidebar hidden md:flex'>
         <div className='px-9'>
           <Logo />
+          <Dropdownuser />
+          <div className="px-2 pr-8"></div>
           <SidebarLinks />
         </div>
       </div>
@@ -79,8 +143,9 @@ const ResponsiveSidebar = () => {
         className='sidebar h-full z-40 absolute md:h-full sm:hidden transition duration-150 ease-in-out'
         id='mobile-nav'
       >
-        <div className='px-9'>
+        <div className='px-2 pr-8'>
           <Logo />
+          <Dropdownuser />
           <SidebarLinks />
         </div>
       </div>

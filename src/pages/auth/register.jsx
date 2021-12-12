@@ -52,7 +52,7 @@ const Register = () => {
       </form>
       <span>¿Ya tienes una cuenta?</span>
       <Link to='/auth/login'>
-        <span className='text-blue-700'>Inicia sesión</span>
+        <span className='text-blue-400'>Inicia sesión</span>
       </Link>
     </div>
   );

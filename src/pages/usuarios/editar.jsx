@@ -50,7 +50,7 @@ const EditarUsuario = () => {
     }
   }, [queryError, mutationError]);
 
-  if (queryLoading) return <div>Cargando....</div>;
+  if (queryLoading) return <div className='text-2xl font-bold text-gray-900'>Cargando....</div>;
 
   return (
     <div className='flew flex-col w-full h-full items-center justify-center p-10'>

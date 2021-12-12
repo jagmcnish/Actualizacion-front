@@ -15,7 +15,7 @@ const IndexUsuarios = () => {
     }
   }, [error]);
 
-  if (loading) return <div>Cargando....</div>;
+  if (loading) return <div className='text-2xl font-bold text-gray-900'>Cargando....</div>;
 
   return (
     <PrivateRoute roleList={['ADMINISTRADOR', 'LIDER']}>
@@ -26,13 +26,13 @@ const IndexUsuarios = () => {
         <table className='tabla'>
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Correo</th>
-              <th>Identificación</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th>Editar</th>
+              <th className="text-center">Nombre</th>
+              <th className="text-center">Apellidos</th>
+              <th className="text-center">Correo</th>
+              <th className="text-center">Identificación</th>
+              <th className="text-center">Rol</th>
+              <th className="text-center">Estado</th>
+              <th className="text-center">Editar</th>
             </tr>
           </thead>
           <tbody>
@@ -41,13 +41,13 @@ const IndexUsuarios = () => {
                 {data.Usuarios.map((u) => {
                   return (
                     <tr key={u._id}>
-                      <td>{u.nombre}</td>
-                      <td>{u.apellido}</td>
-                      <td>{u.correo}</td>
-                      <td>{u.identificacion}</td>
-                      <td>{Enum_Rol[u.rol]}</td>
-                      <td>{Enum_EstadoUsuario[u.estado]}</td>
-                      <td>
+                      <td className="text-center">{u.nombre}</td>
+                      <td className="text-center">{u.apellido}</td>
+                      <td className="text-center">{u.correo}</td>
+                      <td className="text-center">{u.identificacion}</td>
+                      <td className="text-center">{Enum_Rol[u.rol]}</td>
+                      <td className="text-center">{Enum_EstadoUsuario[u.estado]}</td>
+                      <td className="text-center">
                         <Link to={`/usuarios/editar/${u._id}`}>
                           <i className='fas fa-pen text-yellow-600 hover:text-yellow-400 cursor-pointer' />
                         </Link>

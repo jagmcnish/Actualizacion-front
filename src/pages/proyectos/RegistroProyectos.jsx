@@ -6,16 +6,22 @@ import { Link } from 'react-router-dom';
 import DropDown from 'components/Dropdown';
 import ButtonLoading from 'components/ButtonLoading';
 import useFormData from 'hooks/useFormData';
+import { useUser } from "context/userContext";
 import { Enum_TipoObjetivo } from 'utils/enums';
+import { toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
 import { ObjContext } from 'context/objContext';
 import { useObj } from 'context/objContext';
 import { CREAR_PROYECTO } from 'graphql/proyectos/mutations';
 
-const NuevoProyecto = () => {
+const RegistroProyectos = () => {
   const { form, formData, updateFormData } = useFormData();
   const [listaUsuarios, setListaUsuarios] = useState({});
-  const { data, loading, error } = useQuery(GET_USUARIOS, {
+  const { 
+    data: queryData, 
+    // loading: queryLoading,
+    error: queryError,
+  } = useQuery(GET_USUARIOS, {
     variables: {
       filtro: { rol: 'LIDER', estado: 'AUTORIZADO' },
     },
@@ -25,16 +31,16 @@ const NuevoProyecto = () => {
     useMutation(CREAR_PROYECTO);
 
   useEffect(() => {
-    console.log(data);
-    if (data) {
+    console.log(queryData);
+    if (queryData) {
       const lu = {};
-      data.Usuarios.forEach((elemento) => {
-        lu[elemento._id] = elemento.correo;
+      queryData.Usuarios.forEach((elemento) => {
+        lu[elemento._id] = elemento.nombre + elemento.apellido;
       });
 
       setListaUsuarios(lu);
     }
-  }, [data]);
+  }, [queryData]);
 
   useEffect(() => {
     console.log('data mutation', mutationData);
@@ -51,7 +57,20 @@ const NuevoProyecto = () => {
     });
   };
 
-  if (loading) return <div>...Loading</div>;
+  useEffect(() => {
+    if (mutationData) {
+      toast.success('Proyecto creado correctamente');
+    }
+  }, [mutationData]);
+
+  useEffect(() => {
+    if (mutationError) {
+      toast.error('Error al crear el proyecto');
+    }
+
+  }, [queryError, mutationError]);
+
+  // if (loading) return <div>...Loading</div>;
 
   return (
     <div className='p-10 flex flex-col items-center'>
@@ -60,7 +79,7 @@ const NuevoProyecto = () => {
           <i className='fas fa-arrow-left' />
         </Link>
       </div>
-      <h1 className='text-2xl font-bold text-gray-900'>Crear Nuevo Proyecto</h1>
+      <h1 className='text-2xl font-bold text-gray-900'>Adicionar Proyecto</h1>
       <form ref={form} onChange={updateFormData} onSubmit={submitForm}>
         <Input name='nombre' label='Nombre del Proyecto' required={true} type='text' />
         <Input name='presupuesto' label='Presupuesto del Proyecto' required={true} type='number' />
@@ -137,5 +156,10 @@ const FormObjetivo = ({ id }) => {
   );
 };
 
-export default NuevoProyecto;
+export default RegistroProyectos;
+
+
+
+
+
 

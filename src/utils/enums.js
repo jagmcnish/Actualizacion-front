@@ -10,7 +10,7 @@ const Enum_EstadoUsuario = {
   NO_AUTORIZADO: 'No autorizado',
 };
 
-const Enum_EstadoInscripciones = {
+const Enum_EstadoInscripcion = {
   ACEPTADO : 'Aceptado',
   RECHAZADO : 'Rechazado',
   PENDIENTE : 'Pendiente'
@@ -22,10 +22,18 @@ const Enum_EstadoProyecto = {
   INACTIVO: 'Inactivo',
 };
 
+const Enum_FaseProyecto = {
+  INICIADO: 'Iniciado',
+  DESARROLLO: 'En Desarrollo',
+  TERMINADO: 'Terminado',
+  NULO: 'Nulo'
+};
+
+
 const Enum_TipoObjetivo = {
   GENERAL: 'General',
   ESPECIFICO: 'Específico',
 };
 
 
-export { Enum_Rol, Enum_EstadoUsuario, Enum_EstadoProyecto, Enum_TipoObjetivo, Enum_EstadoInscripciones };
+export { Enum_Rol, Enum_EstadoUsuario, Enum_EstadoProyecto, Enum_FaseProyecto, Enum_TipoObjetivo, Enum_EstadoInscripcion };

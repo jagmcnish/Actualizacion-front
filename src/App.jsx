@@ -2,20 +2,27 @@ import React, { useState, useEffect } from 'react';
 import PrivateLayout from 'layouts/PrivateLayout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserContext } from 'context/userContext';
-import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloProvider, 
+  ApolloClient, 
+  createHttpLink, 
+  InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Index from 'pages/Index';
 
 import IndexAvances from 'pages/avances/Index';
-import EditarAvance from 'pages/avances/editar';
+import RegistrarAvance from 'pages/avances/RegistrarAvance';
+import ActualizarAvance from 'pages/avances/ActualizarAvance';
 
 import IndexInscripciones from 'pages/inscripciones';
 
 import IndexProyectos from 'pages/proyectos/Index';
-import NuevoProyecto from 'pages/proyectos/NuevoProyecto';
+import RegistroProyectos from 'pages/proyectos/RegistroProyectos';
+import IndexProyectosUsuarios from 'pages/proyectos/ResumenProyecto';
 
 import IndexUsuarios from 'pages/usuarios';
 import EditarUsuario from 'pages/usuarios/editar';
+import Perfil from "pages/usuarios/Perfil";
+import GestionUsuarios from "pages/usuarios/GestionUsuarios";
 
 import 'styles/globals.css';
 import 'styles/tabla.css';
@@ -83,19 +90,28 @@ function App() {
         <UserContext.Provider value={{ userData, setUserData }}>
           <BrowserRouter>
             <Routes>
+            <Route path='/login' element={<Login />} />
               <Route path='/' element={<PrivateLayout />}>
                 <Route path='' element={<Index />} />
 
                 <Route path='/usuarios' element={<IndexUsuarios />} />
                 <Route path='/usuarios/editar/:_id' element={<EditarUsuario />} />
+                <Route path="usuarios/gestionUsuarios" element={<GestionUsuarios />} />
+                <Route path="perfil" element={<Perfil />} />
 
-                <Route path='/avances' element={<IndexAvances />} />
-                <Route path='/avances/editar/:_id' element={<EditarAvance />} />
+                <Route path="avances" element={<IndexAvances />} />
+                <Route path="avances/registrar" element={<RegistrarAvance />} />
+                <Route
+                  path="avances/actualizar/:_id"
+                  element={<ActualizarAvance />}
+                />
 
                 <Route path='/inscripciones' element={<IndexInscripciones />} />
 
                 <Route path='/proyectos' element={<IndexProyectos />} />
-                <Route path='/proyectos/nuevo' element={<NuevoProyecto />} />
+                <Route path='/proyectos/nuevo' element={<RegistroProyectos />} />
+                <Route path='/proyectos/resumen' element={<IndexProyectosUsuarios />} />
+
               </Route>
               <Route path='/auth' element={<AuthLayout />}>
                 <Route path='register' element={<Register />} />
